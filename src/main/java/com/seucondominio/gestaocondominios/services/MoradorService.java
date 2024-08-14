@@ -1,0 +1,103 @@
+package com.seucondominio.gestaocondominios.services;
+
+import com.seucondominio.gestaocondominios.dto.MoradorDTO;
+import com.seucondominio.gestaocondominios.entities.Morador;
+import com.seucondominio.gestaocondominios.entities.Condominio;
+import com.seucondominio.gestaocondominios.entities.ConselhoGestao;
+import com.seucondominio.gestaocondominios.entities.ConselhoFiscal;
+import com.seucondominio.gestaocondominios.exception.EntityNotFoundException;
+import com.seucondominio.gestaocondominios.mapper.MoradorMapperManual;
+import com.seucondominio.gestaocondominios.repositories.MoradorRepository;
+import com.seucondominio.gestaocondominios.repositories.CondominioRepository;
+import com.seucondominio.gestaocondominios.repositories.ConselhoGestaoRepository;
+import com.seucondominio.gestaocondominios.repositories.ConselhoFiscalRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+@Transactional
+public class MoradorService implements IMoradorService {
+
+    @Autowired
+    private MoradorRepository moradorRepository;
+
+    @Autowired
+    private CondominioRepository condominioRepository;
+
+    @Autowired
+    private ConselhoGestaoRepository conselhoGestaoRepository;
+
+    @Autowired
+    private ConselhoFiscalRepository conselhoFiscalRepository;
+
+    @Autowired
+    private MoradorMapperManual moradorMapperManual;
+
+    @Override
+    public MoradorDTO saveMorador(MoradorDTO moradorDTO) {
+        Morador morador = moradorMapperManual.toEntity(moradorDTO);
+        morador.setCondominio(findCondominioById(moradorDTO.getCondominioId()));
+        morador.setConselhoGestao(findConselhoGestaoById(moradorDTO.getConselhoGestaoId()));
+        morador.setConselhoFiscal(findConselhoFiscalById(moradorDTO.getConselhoFiscalId()));
+        morador = moradorRepository.save(morador);
+        return moradorMapperManual.toDTO(morador);
+    }
+
+    @Override
+    public MoradorDTO updateMorador(Long id, MoradorDTO moradorDTO) {
+        Morador morador = findMoradorById(id);
+        moradorMapperManual.toEntity(moradorDTO);
+        morador.setCondominio(findCondominioById(moradorDTO.getCondominioId()));
+        morador.setConselhoGestao(findConselhoGestaoById(moradorDTO.getConselhoGestaoId()));
+        morador.setConselhoFiscal(findConselhoFiscalById(moradorDTO.getConselhoFiscalId()));
+        morador = moradorRepository.save(morador);
+        return moradorMapperManual.toDTO(morador);
+    }
+
+    @Override
+    public MoradorDTO getMoradorById(Long id) {
+        Morador morador = findMoradorById(id);
+        return moradorMapperManual.toDTO(morador);
+    }
+
+    @Override
+    public List<MoradorDTO> getAllMoradores() {
+        return moradorRepository.findAll().stream()
+            .map(moradorMapperManual::toDTO)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteMorador(Long id) {
+        Morador morador = findMoradorById(id);
+        moradorRepository.delete(morador);
+    }
+
+    // Método privado para centralizar a lógica de busca do Morador
+    private Morador findMoradorById(Long id) {
+        return moradorRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Morador não encontrado com ID: " + id));
+    }
+
+    // Método privado para centralizar a lógica de busca do Condomínio
+    private Condominio findCondominioById(Long id) {
+        return condominioRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Condomínio não encontrado com ID: " + id));
+    }
+
+    // Método privado para centralizar a lógica de busca do Conselho de Gestão
+    private ConselhoGestao findConselhoGestaoById(Long id) {
+        return conselhoGestaoRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Conselho de Gestão não encontrado com ID: " + id));
+    }
+
+    // Método privado para centralizar a lógica de busca do Conselho Fiscal
+    private ConselhoFiscal findConselhoFiscalById(Long id) {
+        return conselhoFiscalRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Conselho Fiscal não encontrado com ID: " + id));
+    }
+}
