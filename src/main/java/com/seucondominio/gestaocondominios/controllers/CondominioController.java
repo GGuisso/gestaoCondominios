@@ -1,7 +1,8 @@
 package com.seucondominio.gestaocondominios.controllers;
 
 import com.seucondominio.gestaocondominios.dto.CondominioDTO;
-import com.seucondominio.gestaocondominios.services.ICondominioService;
+import com.seucondominio.gestaocondominios.services.interfaces.ICondominioService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

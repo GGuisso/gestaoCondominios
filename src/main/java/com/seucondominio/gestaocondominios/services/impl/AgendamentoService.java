@@ -1,10 +1,12 @@
-package com.seucondominio.gestaocondominios.services;
+package com.seucondominio.gestaocondominios.services.impl;
 
 import com.seucondominio.gestaocondominios.dto.AgendamentoDTO;
 import com.seucondominio.gestaocondominios.entities.Agendamento;
 import com.seucondominio.gestaocondominios.exception.EntityNotFoundException;
 import com.seucondominio.gestaocondominios.mapper.AgendamentoMapperManual;
 import com.seucondominio.gestaocondominios.repositories.AgendamentoRepository;
+import com.seucondominio.gestaocondominios.services.interfaces.IAgendamentoService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

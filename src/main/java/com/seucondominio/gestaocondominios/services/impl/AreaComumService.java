@@ -1,10 +1,12 @@
-package com.seucondominio.gestaocondominios.services;
+package com.seucondominio.gestaocondominios.services.impl;
 
 import com.seucondominio.gestaocondominios.dto.AreaComumDTO;
 import com.seucondominio.gestaocondominios.entities.AreaComum;
 import com.seucondominio.gestaocondominios.exception.EntityNotFoundException;
 import com.seucondominio.gestaocondominios.mapper.AreaComumMapperManual;
 import com.seucondominio.gestaocondominios.repositories.AreaComumRepository;
+import com.seucondominio.gestaocondominios.services.interfaces.IAreaComumService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

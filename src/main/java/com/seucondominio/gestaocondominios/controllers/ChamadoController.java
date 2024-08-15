@@ -1,7 +1,8 @@
 package com.seucondominio.gestaocondominios.controllers;
 
 import com.seucondominio.gestaocondominios.dto.ChamadoDTO;
-import com.seucondominio.gestaocondominios.services.IChamadoService;
+import com.seucondominio.gestaocondominios.services.interfaces.IChamadoService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,5 +45,23 @@ public class ChamadoController {
     public ResponseEntity<Void> deleteChamado(@PathVariable Long id) {
         chamadoService.deleteChamado(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/morador/{moradorId}")
+    public ResponseEntity<List<ChamadoDTO>> getChamadosByMoradorId(@PathVariable Long moradorId) {
+        List<ChamadoDTO> chamados = chamadoService.getChamadosByMoradorId(moradorId);
+        return ResponseEntity.ok(chamados);
+    }
+
+    @GetMapping("/sindico/{sindicoId}")
+    public ResponseEntity<List<ChamadoDTO>> getChamadosBySindicoId(@PathVariable Long sindicoId) {
+        List<ChamadoDTO> chamados = chamadoService.getChamadosBySindicoId(sindicoId);
+        return ResponseEntity.ok(chamados);
+    }
+
+    @GetMapping("/status/{status}")
+    public ResponseEntity<List<ChamadoDTO>> getChamadosByStatus(@PathVariable String status) {
+        List<ChamadoDTO> chamados = chamadoService.getChamadosByStatus(status);
+        return ResponseEntity.ok(chamados);
     }
 }

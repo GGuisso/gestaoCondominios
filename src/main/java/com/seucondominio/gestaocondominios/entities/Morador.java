@@ -18,6 +18,12 @@ public class Morador {
     @Column(nullable = false, length = 255)
     private String nome;
 
+    @Column(nullable = false, length = 255)
+    private String sobrenome;  // Novo campo
+
+    @Column(nullable = false, unique = true, length = 11)
+    private String cpf;  // Novo campo
+
     @Column(length = 50)
     private String unidade;
 

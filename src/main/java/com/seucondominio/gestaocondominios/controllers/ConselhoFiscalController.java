@@ -1,7 +1,8 @@
 package com.seucondominio.gestaocondominios.controllers;
 
 import com.seucondominio.gestaocondominios.dto.ConselhoFiscalDTO;
-import com.seucondominio.gestaocondominios.services.IConselhoFiscalService;
+import com.seucondominio.gestaocondominios.services.interfaces.IConselhoFiscalService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

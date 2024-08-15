@@ -1,10 +1,12 @@
-package com.seucondominio.gestaocondominios.services;
+package com.seucondominio.gestaocondominios.services.impl;
 
 import com.seucondominio.gestaocondominios.dto.ChamadoDTO;
 import com.seucondominio.gestaocondominios.entities.Chamado;
 import com.seucondominio.gestaocondominios.exception.EntityNotFoundException;
 import com.seucondominio.gestaocondominios.mapper.ChamadoMapperManual;
 import com.seucondominio.gestaocondominios.repositories.ChamadoRepository;
+import com.seucondominio.gestaocondominios.services.interfaces.IChamadoService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,6 +57,27 @@ public class ChamadoService implements IChamadoService {
     public void deleteChamado(Long id) {
         Chamado chamado = findChamadoById(id);
         chamadoRepository.delete(chamado);
+    }
+
+    @Override
+    public List<ChamadoDTO> getChamadosByMoradorId(Long moradorId) {
+        return chamadoRepository.findByMoradorId(moradorId).stream()
+            .map(chamadoMapperManual::toDTO)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ChamadoDTO> getChamadosBySindicoId(Long sindicoId) {
+        return chamadoRepository.findBySindicoAtendenteId(sindicoId).stream()
+            .map(chamadoMapperManual::toDTO)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ChamadoDTO> getChamadosByStatus(String status) {
+        return chamadoRepository.findByStatus(status).stream()
+            .map(chamadoMapperManual::toDTO)
+            .collect(Collectors.toList());
     }
 
     // Método privado para centralizar a lógica de busca do Chamado

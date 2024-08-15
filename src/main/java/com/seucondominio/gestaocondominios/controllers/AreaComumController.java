@@ -1,7 +1,8 @@
 package com.seucondominio.gestaocondominios.controllers;
 
 import com.seucondominio.gestaocondominios.dto.AreaComumDTO;
-import com.seucondominio.gestaocondominios.services.IAreaComumService;
+import com.seucondominio.gestaocondominios.services.interfaces.IAreaComumService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.seucondominio.gestaocondominios.services;
+package com.seucondominio.gestaocondominios.services.interfaces;
 
 import com.seucondominio.gestaocondominios.dto.AvisoDTO;
 import java.util.List;

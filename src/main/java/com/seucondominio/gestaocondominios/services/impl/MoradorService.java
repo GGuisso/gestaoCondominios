@@ -1,4 +1,4 @@
-package com.seucondominio.gestaocondominios.services;
+package com.seucondominio.gestaocondominios.services.impl;
 
 import com.seucondominio.gestaocondominios.dto.MoradorDTO;
 import com.seucondominio.gestaocondominios.entities.Morador;
@@ -8,6 +8,7 @@ import com.seucondominio.gestaocondominios.entities.ConselhoFiscal;
 import com.seucondominio.gestaocondominios.exception.EntityNotFoundException;
 import com.seucondominio.gestaocondominios.mapper.MoradorMapperManual;
 import com.seucondominio.gestaocondominios.repositories.MoradorRepository;
+import com.seucondominio.gestaocondominios.services.interfaces.IMoradorService;
 import com.seucondominio.gestaocondominios.repositories.CondominioRepository;
 import com.seucondominio.gestaocondominios.repositories.ConselhoGestaoRepository;
 import com.seucondominio.gestaocondominios.repositories.ConselhoFiscalRepository;
@@ -75,6 +76,20 @@ public class MoradorService implements IMoradorService {
     public void deleteMorador(Long id) {
         Morador morador = findMoradorById(id);
         moradorRepository.delete(morador);
+    }
+
+    @Override
+    public MoradorDTO getMoradorByCpf(String cpf) {
+        Morador morador = moradorRepository.findByCpf(cpf)
+            .orElseThrow(() -> new EntityNotFoundException("Morador não encontrado com CPF: " + cpf));
+        return moradorMapperManual.toDTO(morador);
+    }
+
+    @Override
+    public List<MoradorDTO> getMoradoresByEmail(String email) {
+        return moradorRepository.findByEmail(email).stream()
+            .map(moradorMapperManual::toDTO)
+            .collect(Collectors.toList());
     }
 
     // Método privado para centralizar a lógica de busca do Morador

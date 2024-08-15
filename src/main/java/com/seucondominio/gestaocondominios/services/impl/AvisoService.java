@@ -1,10 +1,12 @@
-package com.seucondominio.gestaocondominios.services;
+package com.seucondominio.gestaocondominios.services.impl;
 
 import com.seucondominio.gestaocondominios.dto.AvisoDTO;
 import com.seucondominio.gestaocondominios.entities.Aviso;
 import com.seucondominio.gestaocondominios.exception.EntityNotFoundException;
 import com.seucondominio.gestaocondominios.mapper.AvisoMapperManual;
 import com.seucondominio.gestaocondominios.repositories.AvisoRepository;
+import com.seucondominio.gestaocondominios.services.interfaces.IAvisoService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

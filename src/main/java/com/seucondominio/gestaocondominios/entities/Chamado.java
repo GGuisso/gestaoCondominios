@@ -2,6 +2,7 @@ package com.seucondominio.gestaocondominios.entities;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.*;
 
 @Data
@@ -18,6 +19,10 @@ public class Chamado {
     @JoinColumn(name = "morador_id", nullable = false)
     private Morador morador;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sindico_id")
+    private Sindico sindicoAtendente;
+
     @Column(nullable = false, length = 4000)
     private String descricao;
 
@@ -25,11 +30,20 @@ public class Chamado {
     private String tipo;
 
     @Column(nullable = false, length = 50)
-    private String status;
+    private String status; // Aberto, Em atendimento, Resolvido
+
+    @Column(length = 4000)
+    private String descricaoAtendimento;
+
+    @Column(length = 4000)
+    private String descricaoSolucao;
 
     @Column(nullable = false)
     private LocalDateTime dataAbertura;
 
     @Column
     private LocalDateTime dataFechamento;
+
+    @OneToMany(mappedBy = "chamado", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<AnexoChamado> anexos;
 }

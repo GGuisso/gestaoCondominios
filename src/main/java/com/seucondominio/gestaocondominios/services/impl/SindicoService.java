@@ -1,4 +1,4 @@
-package com.seucondominio.gestaocondominios.services;
+package com.seucondominio.gestaocondominios.services.impl;
 
 import com.seucondominio.gestaocondominios.dto.SindicoDTO;
 import com.seucondominio.gestaocondominios.entities.Sindico;
@@ -6,6 +6,7 @@ import com.seucondominio.gestaocondominios.entities.Condominio;
 import com.seucondominio.gestaocondominios.exception.EntityNotFoundException;
 import com.seucondominio.gestaocondominios.mapper.SindicoMapperManual;
 import com.seucondominio.gestaocondominios.repositories.SindicoRepository;
+import com.seucondominio.gestaocondominios.services.interfaces.ISindicoService;
 import com.seucondominio.gestaocondominios.repositories.CondominioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
