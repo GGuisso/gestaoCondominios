@@ -4,6 +4,7 @@ import com.seucondominio.gestaocondominios.dto.MoradorDTO;
 import com.seucondominio.gestaocondominios.services.interfaces.IMoradorService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +31,19 @@ public class MoradorController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualiza Morador por ID", description = "Atualiza os dados de um morador")
-    public ResponseEntity<MoradorDTO> updateMorador(@PathVariable Long id, @RequestBody MoradorDTO moradorDTO) {
+    public ResponseEntity<MoradorDTO> updateMorador(
+        @Parameter(description = "ID do morador a ser atualizado", required = true)
+        @PathVariable Long id, 
+        @RequestBody MoradorDTO moradorDTO) {
         MoradorDTO updatedMorador = moradorService.updateMorador(id, moradorDTO);
         return ResponseEntity.ok(updatedMorador);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Buscar morador por ID", description = "Retorna os detalhes de um morador específico")
-    public ResponseEntity<MoradorDTO> getMoradorById(@PathVariable Long id) {
+    public ResponseEntity<MoradorDTO> getMoradorById(
+        @Parameter(description = "ID do morador a ser buscado", required = true) 
+        @PathVariable Long id) {
         MoradorDTO moradorDTO = moradorService.getMoradorById(id);
         return ResponseEntity.ok(moradorDTO);
     }
@@ -51,21 +57,27 @@ public class MoradorController {
 
     @GetMapping("/cpf/{cpf}")
     @Operation(summary = "Buscar morador por CPF", description = "Retorna os detalhes de um morador específico")
-    public ResponseEntity<MoradorDTO> getMoradorByCpf(@PathVariable String cpf) {
+    public ResponseEntity<MoradorDTO> getMoradorByCpf(
+        @Parameter(description = "CPF do morador a ser buscado", required = true) 
+        @PathVariable String cpf) {
         MoradorDTO moradorDTO = moradorService.getMoradorByCpf(cpf);
         return ResponseEntity.ok(moradorDTO);
     }
 
     @GetMapping("/email/{email}")
     @Operation(summary = "Buscar morador por EMAIL", description = "Retorna os detalhes de um morador específico")
-    public ResponseEntity<List<MoradorDTO>> getMoradoresByEmail(@PathVariable String email) {
+    public ResponseEntity<List<MoradorDTO>> getMoradoresByEmail(
+        @Parameter(description = "E-mail do morador a ser buscado", required = true) 
+        @PathVariable String email) {
         List<MoradorDTO> moradores = moradorService.getMoradoresByEmail(email);
         return ResponseEntity.ok(moradores);
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deleta morador por ID", description = "Remove o cadastro de um morador")
-    public ResponseEntity<Void> deleteMorador(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteMorador(
+        @Parameter(description = "ID do morador a ser deletado", required = true) 
+        @PathVariable Long id) {
         moradorService.deleteMorador(id);
         return ResponseEntity.noContent().build();
     }

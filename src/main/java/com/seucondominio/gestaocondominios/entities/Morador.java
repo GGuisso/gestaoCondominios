@@ -19,10 +19,10 @@ public class Morador {
     private String nome;
 
     @Column(nullable = false, length = 255)
-    private String sobrenome;  // Novo campo
+    private String sobrenome;
 
     @Column(nullable = false, unique = true, length = 11)
-    private String cpf;  // Novo campo
+    private String cpf;
 
     @Column(length = 50)
     private String unidade;
@@ -37,11 +37,11 @@ public class Morador {
     @JoinColumn(name = "condominio_id", nullable = false)
     private Condominio condominio;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "conselho_gestao_id")
     private ConselhoGestao conselhoGestao;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "conselho_fiscal_id")
     private ConselhoFiscal conselhoFiscal;
 }

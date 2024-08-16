@@ -28,6 +28,7 @@ public class MoradorMapperManual {
         moradorDTO.setUnidade(morador.getUnidade());
         moradorDTO.setTelefone(morador.getTelefone());
         moradorDTO.setEmail(morador.getEmail());
+
         if (morador.getCondominio() != null) {
             moradorDTO.setCondominioId(morador.getCondominio().getId());
         }
@@ -37,6 +38,7 @@ public class MoradorMapperManual {
         if (morador.getConselhoFiscal() != null) {
             moradorDTO.setConselhoFiscalId(morador.getConselhoFiscal().getId());
         }
+        
         return moradorDTO;
     }
 }

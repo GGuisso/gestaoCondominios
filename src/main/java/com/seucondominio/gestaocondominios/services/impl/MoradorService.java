@@ -42,8 +42,19 @@ public class MoradorService implements IMoradorService {
     public MoradorDTO saveMorador(MoradorDTO moradorDTO) {
         Morador morador = moradorMapperManual.toEntity(moradorDTO);
         morador.setCondominio(findCondominioById(moradorDTO.getCondominioId()));
-        morador.setConselhoGestao(findConselhoGestaoById(moradorDTO.getConselhoGestaoId()));
-        morador.setConselhoFiscal(findConselhoFiscalById(moradorDTO.getConselhoFiscalId()));
+        
+        if (moradorDTO.getConselhoGestaoId() != null) {
+            morador.setConselhoGestao(findConselhoGestaoById(moradorDTO.getConselhoGestaoId()));
+        } else {
+            morador.setConselhoGestao(null);
+        }
+
+        if (moradorDTO.getConselhoFiscalId() != null) {
+            morador.setConselhoFiscal(findConselhoFiscalById(moradorDTO.getConselhoFiscalId()));
+        } else {
+            morador.setConselhoFiscal(null);
+        }
+
         morador = moradorRepository.save(morador);
         return moradorMapperManual.toDTO(morador);
     }
@@ -53,8 +64,19 @@ public class MoradorService implements IMoradorService {
         Morador morador = findMoradorById(id);
         moradorMapperManual.toEntity(moradorDTO);
         morador.setCondominio(findCondominioById(moradorDTO.getCondominioId()));
-        morador.setConselhoGestao(findConselhoGestaoById(moradorDTO.getConselhoGestaoId()));
-        morador.setConselhoFiscal(findConselhoFiscalById(moradorDTO.getConselhoFiscalId()));
+
+        if (moradorDTO.getConselhoGestaoId() != null) {
+            morador.setConselhoGestao(findConselhoGestaoById(moradorDTO.getConselhoGestaoId()));
+        } else {
+            morador.setConselhoGestao(null);
+        }
+
+        if (moradorDTO.getConselhoFiscalId() != null) {
+            morador.setConselhoFiscal(findConselhoFiscalById(moradorDTO.getConselhoFiscalId()));
+        } else {
+            morador.setConselhoFiscal(null);
+        }
+
         morador = moradorRepository.save(morador);
         return moradorMapperManual.toDTO(morador);
     }
