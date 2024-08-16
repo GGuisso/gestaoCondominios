@@ -5,13 +5,17 @@ import com.seucondominio.gestaocondominios.entities.Morador;
 import com.seucondominio.gestaocondominios.entities.Condominio;
 import com.seucondominio.gestaocondominios.entities.ConselhoGestao;
 import com.seucondominio.gestaocondominios.entities.ConselhoFiscal;
+import com.seucondominio.gestaocondominios.entities.Torre;
+import com.seucondominio.gestaocondominios.entities.Unidade;
 import com.seucondominio.gestaocondominios.exception.EntityNotFoundException;
 import com.seucondominio.gestaocondominios.mapper.MoradorMapperManual;
 import com.seucondominio.gestaocondominios.repositories.MoradorRepository;
-import com.seucondominio.gestaocondominios.services.interfaces.IMoradorService;
 import com.seucondominio.gestaocondominios.repositories.CondominioRepository;
 import com.seucondominio.gestaocondominios.repositories.ConselhoGestaoRepository;
 import com.seucondominio.gestaocondominios.repositories.ConselhoFiscalRepository;
+import com.seucondominio.gestaocondominios.repositories.TorreRepository;
+import com.seucondominio.gestaocondominios.repositories.UnidadeRepository;
+import com.seucondominio.gestaocondominios.services.interfaces.IMoradorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,12 +40,20 @@ public class MoradorService implements IMoradorService {
     private ConselhoFiscalRepository conselhoFiscalRepository;
 
     @Autowired
+    private TorreRepository torreRepository;
+
+    @Autowired
+    private UnidadeRepository unidadeRepository;
+
+    @Autowired
     private MoradorMapperManual moradorMapperManual;
 
     @Override
     public MoradorDTO saveMorador(MoradorDTO moradorDTO) {
         Morador morador = moradorMapperManual.toEntity(moradorDTO);
         morador.setCondominio(findCondominioById(moradorDTO.getCondominioId()));
+        morador.setTorre(findTorreById(moradorDTO.getTorreId()));
+        morador.setUnidade(findUnidadeById(moradorDTO.getUnidadeId()));
         
         if (moradorDTO.getConselhoGestaoId() != null) {
             morador.setConselhoGestao(findConselhoGestaoById(moradorDTO.getConselhoGestaoId()));
@@ -64,6 +76,8 @@ public class MoradorService implements IMoradorService {
         Morador morador = findMoradorById(id);
         moradorMapperManual.toEntity(moradorDTO);
         morador.setCondominio(findCondominioById(moradorDTO.getCondominioId()));
+        morador.setTorre(findTorreById(moradorDTO.getTorreId()));
+        morador.setUnidade(findUnidadeById(moradorDTO.getUnidadeId()));
 
         if (moradorDTO.getConselhoGestaoId() != null) {
             morador.setConselhoGestao(findConselhoGestaoById(moradorDTO.getConselhoGestaoId()));
@@ -124,6 +138,18 @@ public class MoradorService implements IMoradorService {
     private Condominio findCondominioById(Long id) {
         return condominioRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Condomínio não encontrado com ID: " + id));
+    }
+
+    // Método privado para centralizar a lógica de busca da Torre
+    private Torre findTorreById(Long id) {
+        return torreRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Torre não encontrada com ID: " + id));
+    }
+
+    // Método privado para centralizar a lógica de busca da Unidade
+    private Unidade findUnidadeById(Long id) {
+        return unidadeRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Unidade não encontrada com ID: " + id));
     }
 
     // Método privado para centralizar a lógica de busca do Conselho de Gestão

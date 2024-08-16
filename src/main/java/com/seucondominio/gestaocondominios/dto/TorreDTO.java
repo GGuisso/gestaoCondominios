@@ -4,19 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MoradorDTO {
+public class TorreDTO {
     private Long id;
     private String nome;
-    private String sobrenome;
-    private String cpf;
-    private String telefone;
-    private String email;
     private Long condominioId;
-    private Long torreId;
-    private Long unidadeId;
-    private Long conselhoGestaoId;
-    private Long conselhoFiscalId;
+    private Set<UnidadeDTO> unidades;
 }

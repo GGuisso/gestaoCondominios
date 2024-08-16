@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -36,5 +38,7 @@ public class Condominio {
     @OneToOne
     @JoinColumn(name = "conselho_fiscal_id", referencedColumnName = "id")
     private ConselhoFiscal conselhoFiscal;
-}
 
+    @OneToMany(mappedBy = "condominio", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Torre> torres;
+}

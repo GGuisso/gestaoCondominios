@@ -24,9 +24,6 @@ public class Morador {
     @Column(nullable = false, unique = true, length = 11)
     private String cpf;
 
-    @Column(length = 50)
-    private String unidade;
-
     @Column(length = 20)
     private String telefone;
 
@@ -36,6 +33,14 @@ public class Morador {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "condominio_id", nullable = false)
     private Condominio condominio;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "torre_id", nullable = false)
+    private Torre torre;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "unidade_id", nullable = false)
+    private Unidade unidade;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "conselho_gestao_id")
