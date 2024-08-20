@@ -32,13 +32,14 @@ public class SecurityConfig {
                 .requestMatchers(
                     "/api/auth/**", 
                     "/api/usuarios/**", 
+                    "/api/condominios/**",  // Permite que a ROLE_APLICATION acesse esses endpoints
                     "/h2-console/**", 
                     "/swagger-ui/**", 
                     "/v3/api-docs/**", 
                     "/swagger-resources/**", 
                     "/swagger-ui.html", 
                     "/webjars/**"
-                ).permitAll()  // Permitir acesso público às rotas de autenticação, cadastro de usuários, Swagger UI e H2 Console
+                ).hasAnyRole("APLICATION", "ADMIN") // ROLE_APLICATION e ROLE_ADMIN podem acessar esses endpoints
                 .anyRequest().authenticated()  // Todas as outras rotas precisam de autenticação
             )
             .headers(headers -> headers
