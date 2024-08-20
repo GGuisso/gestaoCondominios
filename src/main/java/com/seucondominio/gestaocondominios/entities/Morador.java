@@ -49,4 +49,8 @@ public class Morador {
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "conselho_fiscal_id")
     private ConselhoFiscal conselhoFiscal;
+
+    @OneToOne
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id", nullable = false)
+    private Usuario usuario; // Relação com o usuário
 }

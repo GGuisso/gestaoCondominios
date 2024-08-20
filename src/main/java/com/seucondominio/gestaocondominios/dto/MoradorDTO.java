@@ -19,4 +19,5 @@ public class MoradorDTO {
     private Long unidadeId;
     private Long conselhoGestaoId;
     private Long conselhoFiscalId;
+    private Long usuarioId; // Novo campo para manter a relação com o usuário
 }

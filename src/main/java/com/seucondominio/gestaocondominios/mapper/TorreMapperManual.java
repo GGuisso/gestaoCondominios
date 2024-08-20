@@ -2,8 +2,12 @@ package com.seucondominio.gestaocondominios.mapper;
 
 import com.seucondominio.gestaocondominios.dto.TorreDTO;
 import com.seucondominio.gestaocondominios.dto.UnidadeDTO;
+import com.seucondominio.gestaocondominios.entities.Condominio;
 import com.seucondominio.gestaocondominios.entities.Torre;
 import com.seucondominio.gestaocondominios.entities.Unidade;
+import com.seucondominio.gestaocondominios.exception.EntityNotFoundException;
+import com.seucondominio.gestaocondominios.repositories.CondominioRepository;
+
 import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
@@ -11,10 +15,23 @@ import java.util.stream.Collectors;
 @Component
 public class TorreMapperManual {
 
+    private final CondominioRepository condominioRepository;
+
+    public TorreMapperManual(CondominioRepository condominioRepository) {
+        this.condominioRepository = condominioRepository;
+    }
+
     public Torre toEntity(TorreDTO torreDTO) {
         Torre torre = new Torre();
         torre.setId(torreDTO.getId());
         torre.setNome(torreDTO.getNome());
+
+        // Associa a torre ao condomínio correspondente
+        if (torreDTO.getCondominioId() != null) {
+            Condominio condominio = condominioRepository.findById(torreDTO.getCondominioId())
+                .orElseThrow(() -> new EntityNotFoundException("Condomínio não encontrado com ID: " + torreDTO.getCondominioId()));
+            torre.setCondominio(condominio);
+        }
 
         if (torreDTO.getUnidades() != null) {
             torre.setUnidades(torreDTO.getUnidades().stream()

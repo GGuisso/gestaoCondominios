@@ -14,5 +14,9 @@ public class CondominioDTO {
     private String nome;
     private String endereco;
     private String cnpj;
-    private Set<TorreDTO> torres;  // Novo campo para incluir as torres
+    private Long sindicoId;
+    private Long conselhoGestaoId;
+    private Long conselhoFiscalId;
+    private Long usuarioAdminId;
+    private Set<TorreDTO> torres;  // Campo para incluir as torres
 }

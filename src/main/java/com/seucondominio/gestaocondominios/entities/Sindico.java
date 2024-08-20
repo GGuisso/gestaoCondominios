@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,6 +20,12 @@ public class Sindico {
     @Column(nullable = false, length = 255)
     private String nome;
 
+    @Column(nullable = false, length = 255)
+    private String sobrenome;
+
+    @Column(nullable = false, unique = true, length = 11)
+    private String cpf;
+
     @Column(length = 20)
     private String telefone;
 
@@ -28,7 +36,9 @@ public class Sindico {
     private boolean profissional;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "condominio_id", nullable = false)
-    private Condominio condominio;
-}
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
 
+    @OneToMany(mappedBy = "sindico", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Condominio> condominios;
+}

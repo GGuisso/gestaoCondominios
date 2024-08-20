@@ -6,7 +6,6 @@ import com.seucondominio.gestaocondominios.exception.EntityNotFoundException;
 import com.seucondominio.gestaocondominios.mapper.CondominioMapperManual;
 import com.seucondominio.gestaocondominios.repositories.CondominioRepository;
 import com.seucondominio.gestaocondominios.services.interfaces.ICondominioService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,8 +33,8 @@ public class CondominioService implements ICondominioService {
     @Override
     public CondominioDTO updateCondominio(Long id, CondominioDTO condominioDTO) {
         Condominio condominio = findCondominioById(id);
-        condominio = condominioMapperManual.toEntity(condominioDTO);
-        condominio.setId(id);  // Garantir que o ID do condomínio seja mantido
+        condominioMapperManual.toEntity(condominioDTO); // Atualiza os campos
+        condominio.setId(id);  // Garante que o ID do condomínio seja mantido
         condominio = condominioRepository.save(condominio);
         return condominioMapperManual.toDTO(condominio);
     }
