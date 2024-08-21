@@ -4,6 +4,7 @@ import com.seucondominio.gestaocondominios.dto.AnexoDTO;
 import com.seucondominio.gestaocondominios.entities.Anexo;
 import com.seucondominio.gestaocondominios.repositories.ChamadoRepository;
 import com.seucondominio.gestaocondominios.repositories.ServicoAgendadoRepository;
+import com.seucondominio.gestaocondominios.repositories.ProfissionalRepository;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -11,10 +12,12 @@ public class AnexoMapperManual {
 
     private final ChamadoRepository chamadoRepository;
     private final ServicoAgendadoRepository servicoAgendadoRepository;
+    private final ProfissionalRepository profissionalRepository;
 
-    public AnexoMapperManual(ChamadoRepository chamadoRepository, ServicoAgendadoRepository servicoAgendadoRepository) {
+    public AnexoMapperManual(ChamadoRepository chamadoRepository, ServicoAgendadoRepository servicoAgendadoRepository, ProfissionalRepository profissionalRepository) {
         this.chamadoRepository = chamadoRepository;
         this.servicoAgendadoRepository = servicoAgendadoRepository;
+        this.profissionalRepository = profissionalRepository;
     }
 
     public Anexo toEntity(AnexoDTO anexoDTO) {
@@ -34,6 +37,11 @@ public class AnexoMapperManual {
                 .orElse(null));
         }
 
+        if (anexoDTO.getProfissionalId() != null) {
+            anexo.setProfissional(profissionalRepository.findById(anexoDTO.getProfissionalId())
+                .orElse(null));
+        }
+
         return anexo;
     }
 
@@ -50,6 +58,10 @@ public class AnexoMapperManual {
 
         if (anexo.getServicoAgendado() != null) {
             anexoDTO.setServicoAgendadoId(anexo.getServicoAgendado().getId());
+        }
+
+        if (anexo.getProfissional() != null) {
+            anexoDTO.setProfissionalId(anexo.getProfissional().getId());
         }
 
         return anexoDTO;

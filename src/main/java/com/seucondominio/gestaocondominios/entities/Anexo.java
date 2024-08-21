@@ -32,5 +32,8 @@ public class Anexo {
     @JoinColumn(name = "servico_agendado_id", nullable = true)
     private ServicoAgendado servicoAgendado;
 
-    // Outras entidades que possam necessitar de anexos podem ser adicionadas aqui da mesma forma.
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "profissional_id", nullable = true)
+    private Profissional profissional;
+
 }

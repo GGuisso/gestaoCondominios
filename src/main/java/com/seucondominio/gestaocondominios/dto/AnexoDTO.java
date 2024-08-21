@@ -14,5 +14,5 @@ public class AnexoDTO {
     private String descricao;
     private Long chamadoId;
     private Long servicoAgendadoId;
-    // IDs de outras entidades, se necessário
+    private Long profissionalId; 
 }

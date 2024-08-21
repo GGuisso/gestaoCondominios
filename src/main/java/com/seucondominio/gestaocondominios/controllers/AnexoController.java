@@ -47,6 +47,15 @@ public class AnexoController {
         return ResponseEntity.ok(anexos);
     }
 
+    @GetMapping("/profissional/{profissionalId}")
+    @Operation(summary = "Buscar Anexos por Profissional", description = "Retorna os anexos relacionados a um profissional específico")
+    public ResponseEntity<List<AnexoDTO>> getAnexosByProfissionalId(
+        @Parameter(description = "ID do profissional", required = true) 
+        @PathVariable Long profissionalId) {
+        List<AnexoDTO> anexos = anexoService.getAnexosByProfissionalId(profissionalId);
+        return ResponseEntity.ok(anexos);
+    }
+
     @DeleteMapping("/{id}")
     @Operation(summary = "Deleta Anexo por ID", description = "Remove um anexo pelo seu ID")
     public ResponseEntity<Void> deleteAnexo(

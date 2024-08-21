@@ -10,5 +10,5 @@ import java.util.List;
 public interface AnexoRepository extends JpaRepository<Anexo, Long> {
     List<Anexo> findByChamadoId(Long chamadoId);
     List<Anexo> findByServicoAgendadoId(Long servicoAgendadoId);
-    // Outros métodos de busca conforme necessário
+    List<Anexo> findByProfissionalId(Long profissionalId); // Novo método adicionado
 }

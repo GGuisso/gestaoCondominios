@@ -44,6 +44,13 @@ public class AnexoService implements IAnexoService {
     }
 
     @Override
+    public List<AnexoDTO> getAnexosByProfissionalId(Long profissionalId) {
+        return anexoRepository.findByProfissionalId(profissionalId).stream()
+            .map(anexoMapperManual::toDTO)
+            .collect(Collectors.toList());
+    }
+
+    @Override
     public void deleteAnexo(Long id) {
         anexoRepository.deleteById(id);
     }
