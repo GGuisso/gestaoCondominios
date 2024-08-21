@@ -2,7 +2,7 @@ package com.seucondominio.gestaocondominios.mapper;
 
 import com.seucondominio.gestaocondominios.dto.AnexoDTO;
 import com.seucondominio.gestaocondominios.dto.ChamadoDTO;
-import com.seucondominio.gestaocondominios.entities.AnexoChamado;
+import com.seucondominio.gestaocondominios.entities.Anexo;
 import com.seucondominio.gestaocondominios.entities.Chamado;
 import com.seucondominio.gestaocondominios.entities.Morador;
 import com.seucondominio.gestaocondominios.entities.Sindico;
@@ -51,7 +51,7 @@ public class ChamadoMapperManual {
         }
 
         // Mapeando os anexos
-        List<AnexoChamado> anexos = chamadoDTO.getAnexos().stream()
+        List<Anexo> anexos = chamadoDTO.getAnexos().stream()
             .map(anexoMapperManual::toEntity)
             .collect(Collectors.toList());
         chamado.setAnexos(anexos);

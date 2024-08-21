@@ -45,5 +45,5 @@ public class Chamado {
     private LocalDateTime dataFechamento;
 
     @OneToMany(mappedBy = "chamado", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<AnexoChamado> anexos;
+    private List<Anexo> anexos;
 }

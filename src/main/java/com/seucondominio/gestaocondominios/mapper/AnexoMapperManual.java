@@ -1,72 +1,55 @@
 package com.seucondominio.gestaocondominios.mapper;
 
 import com.seucondominio.gestaocondominios.dto.AnexoDTO;
-import com.seucondominio.gestaocondominios.entities.AnexoChamado;
-import com.seucondominio.gestaocondominios.entities.Chamado;
-import com.seucondominio.gestaocondominios.entities.Morador;
-import com.seucondominio.gestaocondominios.entities.Sindico;
-import com.seucondominio.gestaocondominios.exception.EntityNotFoundException;
+import com.seucondominio.gestaocondominios.entities.Anexo;
 import com.seucondominio.gestaocondominios.repositories.ChamadoRepository;
-import com.seucondominio.gestaocondominios.repositories.MoradorRepository;
-import com.seucondominio.gestaocondominios.repositories.SindicoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.seucondominio.gestaocondominios.repositories.ServicoAgendadoRepository;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AnexoMapperManual {
 
-    @Autowired
-    private ChamadoRepository chamadoRepository;
+    private final ChamadoRepository chamadoRepository;
+    private final ServicoAgendadoRepository servicoAgendadoRepository;
 
-    @Autowired
-    private MoradorRepository moradorRepository;
+    public AnexoMapperManual(ChamadoRepository chamadoRepository, ServicoAgendadoRepository servicoAgendadoRepository) {
+        this.chamadoRepository = chamadoRepository;
+        this.servicoAgendadoRepository = servicoAgendadoRepository;
+    }
 
-    @Autowired
-    private SindicoRepository sindicoRepository;
-
-    public AnexoChamado toEntity(AnexoDTO anexoDTO) {
-        AnexoChamado anexo = new AnexoChamado();
+    public Anexo toEntity(AnexoDTO anexoDTO) {
+        Anexo anexo = new Anexo();
         anexo.setId(anexoDTO.getId());
-        anexo.setNomeArquivo(anexoDTO.getNomeArquivo());
+        anexo.setNome(anexoDTO.getNome());
         anexo.setCaminhoArquivo(anexoDTO.getCaminhoArquivo());
-        anexo.setDataUpload(anexoDTO.getDataUpload());
+        anexo.setDescricao(anexoDTO.getDescricao());
 
-        // Mapeando o Chamado
-        Chamado chamado = chamadoRepository.findById(anexoDTO.getChamadoId())
-            .orElseThrow(() -> new EntityNotFoundException("Chamado não encontrado com ID: " + anexoDTO.getChamadoId()));
-        anexo.setChamado(chamado);
-
-        // Mapeando o Morador, se presente
-        if (anexoDTO.getMoradorId() != null) {
-            Morador morador = moradorRepository.findById(anexoDTO.getMoradorId())
-                .orElseThrow(() -> new EntityNotFoundException("Morador não encontrado com ID: " + anexoDTO.getMoradorId()));
-            anexo.setMorador(morador);
+        if (anexoDTO.getChamadoId() != null) {
+            anexo.setChamado(chamadoRepository.findById(anexoDTO.getChamadoId())
+                .orElse(null));
         }
 
-        // Mapeando o Sindico, se presente
-        if (anexoDTO.getSindicoId() != null) {
-            Sindico sindico = sindicoRepository.findById(anexoDTO.getSindicoId())
-                .orElseThrow(() -> new EntityNotFoundException("Sindico não encontrado com ID: " + anexoDTO.getSindicoId()));
-            anexo.setSindico(sindico);
+        if (anexoDTO.getServicoAgendadoId() != null) {
+            anexo.setServicoAgendado(servicoAgendadoRepository.findById(anexoDTO.getServicoAgendadoId())
+                .orElse(null));
         }
 
         return anexo;
     }
 
-    public AnexoDTO toDTO(AnexoChamado anexo) {
+    public AnexoDTO toDTO(Anexo anexo) {
         AnexoDTO anexoDTO = new AnexoDTO();
         anexoDTO.setId(anexo.getId());
-        anexoDTO.setNomeArquivo(anexo.getNomeArquivo());
+        anexoDTO.setNome(anexo.getNome());
         anexoDTO.setCaminhoArquivo(anexo.getCaminhoArquivo());
-        anexoDTO.setDataUpload(anexo.getDataUpload());
-        anexoDTO.setChamadoId(anexo.getChamado().getId());
+        anexoDTO.setDescricao(anexo.getDescricao());
 
-        if (anexo.getMorador() != null) {
-            anexoDTO.setMoradorId(anexo.getMorador().getId());
+        if (anexo.getChamado() != null) {
+            anexoDTO.setChamadoId(anexo.getChamado().getId());
         }
 
-        if (anexo.getSindico() != null) {
-            anexoDTO.setSindicoId(anexo.getSindico().getId());
+        if (anexo.getServicoAgendado() != null) {
+            anexoDTO.setServicoAgendadoId(anexo.getServicoAgendado().getId());
         }
 
         return anexoDTO;

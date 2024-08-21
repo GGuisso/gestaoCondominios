@@ -29,18 +29,16 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
+                // Liberar apenas as seguintes rotas para acesso público sem autenticação
                 .requestMatchers(
-                    "/api/auth/**", 
-                    "/api/usuarios/**", 
-                    "/api/condominios/**",  // Permite que a ROLE_APLICATION acesse esses endpoints
                     "/h2-console/**", 
                     "/swagger-ui/**", 
                     "/v3/api-docs/**", 
                     "/swagger-resources/**", 
-                    "/swagger-ui.html", 
-                    "/webjars/**"
-                ).hasAnyRole("APLICATION", "ADMIN") // ROLE_APLICATION e ROLE_ADMIN podem acessar esses endpoints
-                .anyRequest().authenticated()  // Todas as outras rotas precisam de autenticação
+                    "/swagger-ui.html"
+                ).permitAll()
+                // Todas as outras rotas exigem autenticação
+                .anyRequest().authenticated()
             )
             .headers(headers -> headers
                 .frameOptions(frameOptions -> frameOptions.sameOrigin())  // Permitir que o console H2 seja carregado em frames da mesma origem

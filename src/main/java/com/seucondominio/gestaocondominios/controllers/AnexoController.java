@@ -38,8 +38,17 @@ public class AnexoController {
         return ResponseEntity.ok(anexos);
     }
 
+    @GetMapping("/servicoAgendado/{servicoAgendadoId}")
+    @Operation(summary = "Buscar Anexos por Serviço Agendado", description = "Retorna os anexos relacionados a um serviço agendado específico")
+    public ResponseEntity<List<AnexoDTO>> getAnexosByServicoAgendadoId(
+        @Parameter(description = "ID do serviço agendado", required = true) 
+        @PathVariable Long servicoAgendadoId) {
+        List<AnexoDTO> anexos = anexoService.getAnexosByServicoAgendadoId(servicoAgendadoId);
+        return ResponseEntity.ok(anexos);
+    }
+
     @DeleteMapping("/{id}")
-    @Operation(summary = "Deleta Anexo por ID", description = "Remove o cadastro de um anexo")
+    @Operation(summary = "Deleta Anexo por ID", description = "Remove um anexo pelo seu ID")
     public ResponseEntity<Void> deleteAnexo(
         @Parameter(description = "ID do anexo a ser deletado", required = true) 
         @PathVariable Long id) {
