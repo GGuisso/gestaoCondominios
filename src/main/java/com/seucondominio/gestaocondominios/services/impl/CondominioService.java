@@ -78,6 +78,13 @@ public class CondominioService implements ICondominioService {
         Condominio condominio = findCondominioById(id);
         return condominioMapperManual.toDTO(condominio);
     }
+    
+    @Override
+    public CondominioDTO getCondominioByCnpj(String cnpj) {
+        return condominioRepository.findByCnpj(cnpj)
+            .map(condominioMapperManual::toDTO)
+            .orElseThrow(() -> new EntityNotFoundException("Condomínio não encontrado com CNPJ: " + cnpj));
+    }
 
     @Override
     public List<CondominioDTO> getAllCondominios() {

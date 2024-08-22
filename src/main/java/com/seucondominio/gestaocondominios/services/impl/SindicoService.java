@@ -44,6 +44,20 @@ public class SindicoService implements ISindicoService {
         Sindico sindico = findSindicoById(id);
         return sindicoMapperManual.toDTO(sindico);
     }
+    
+    @Override
+    public SindicoDTO getSindicoByCpf(String cpf) {
+        return sindicoRepository.findByCpf(cpf)
+                .map(sindicoMapperManual::toDTO)
+                .orElseThrow(() -> new EntityNotFoundException("Síndico não encontrado com CPF: " + cpf));
+    }
+
+    @Override
+    public SindicoDTO getSindicoByEmail(String email) {
+        return sindicoRepository.findByEmail(email)
+                .map(sindicoMapperManual::toDTO)
+                .orElseThrow(() -> new EntityNotFoundException("Síndico não encontrado com e-mail: " + email));
+    }
 
     @Override
     public List<SindicoDTO> getAllSindicos() {

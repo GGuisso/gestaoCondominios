@@ -47,6 +47,20 @@ public class SindicoController {
         SindicoDTO sindicoDTO = sindicoService.getSindicoById(id);
         return ResponseEntity.ok(sindicoDTO);
     }
+    
+    @GetMapping("/cpf/{cpf}")
+    @Operation(summary = "Buscar Síndico por CPF", description = "Retorna os detalhes de um síndico pelo CPF")
+    public ResponseEntity<SindicoDTO> getSindicoByCpf(@PathVariable String cpf) {
+        SindicoDTO sindicoDTO = sindicoService.getSindicoByCpf(cpf);
+        return ResponseEntity.ok(sindicoDTO);
+    }
+
+    @GetMapping("/email/{email}")
+    @Operation(summary = "Buscar Síndico por E-mail", description = "Retorna os detalhes de um síndico pelo e-mail")
+    public ResponseEntity<SindicoDTO> getSindicoByEmail(@PathVariable String email) {
+        SindicoDTO sindicoDTO = sindicoService.getSindicoByEmail(email);
+        return ResponseEntity.ok(sindicoDTO);
+    }
 
     @GetMapping
     @Operation(summary = "Lista Síndicos", description = "Retorna os detalhes de todos os síndicos cadastrados")

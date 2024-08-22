@@ -47,6 +47,12 @@ public class CondominioController {
         CondominioDTO condominioDTO = condominioService.getCondominioById(id);
         return ResponseEntity.ok(condominioDTO);
     }
+    
+    @GetMapping("/cnpj/{cnpj}")
+    public ResponseEntity<CondominioDTO> getCondominioByCnpj(@PathVariable String cnpj) {
+        CondominioDTO condominioDTO = condominioService.getCondominioByCnpj(cnpj);
+        return ResponseEntity.ok(condominioDTO);
+    }
 
     @GetMapping
     @Operation(summary = "Lista Condomínios", description = "Retorna os detalhes de todos os condomínios cadastrados")

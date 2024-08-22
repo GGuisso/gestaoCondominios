@@ -7,6 +7,8 @@ public interface ISindicoService {
     SindicoDTO saveSindico(SindicoDTO sindicoDTO);
     SindicoDTO updateSindico(Long id, SindicoDTO sindicoDTO);
     SindicoDTO getSindicoById(Long id);
+    SindicoDTO getSindicoByCpf(String cpf);
+    SindicoDTO getSindicoByEmail(String email);
     List<SindicoDTO> getAllSindicos();
     void deleteSindico(Long id);
 }
