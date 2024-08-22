@@ -31,6 +31,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 // Liberar apenas as seguintes rotas para acesso público sem autenticação
                 .requestMatchers(
+                	"/api/auth/**", 
                     "/h2-console/**", 
                     "/swagger-ui/**", 
                     "/v3/api-docs/**", 
